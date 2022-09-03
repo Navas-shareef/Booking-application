@@ -6,7 +6,11 @@ func  main()  {
 
 	var conferenceName  = "Go conference"
 	const conferenceTickets=50 
-	var remainigTickets=50 
+	var remainigTickets uint =50 
+	
+	
+
+
 
 	fmt.Printf("conferenceTickets is %T, conferenceName is %T,remainingTicket is %T",conferenceTickets,conferenceName,remainigTickets)
 
@@ -15,14 +19,28 @@ func  main()  {
 	fmt.Println("Get your tickets here to attend")
 	
 
-	var userName string
-	var userTickets int
+	var firstName string
+	var lastName string
+	var email string 
+	var userTickets uint
 	// ask user for their name
+	fmt.Println("Enter your first name: ")
+	fmt.Scan(&firstName)
 
-	userName="Tom"
-	userTickets=2
-	fmt.Printf("User %v booked %v tickets\n",userName,userTickets)
+	fmt.Println("Enter your last name: ")
+	fmt.Scan(&lastName)
 
+	fmt.Println("Enter your email address: ")
+	fmt.Scan(&email)
+
+	fmt.Println("Enter number of tickets: ")
+	fmt.Scan(&userTickets)
+
+
+	remainigTickets=remainigTickets - userTickets
+
+	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation emait at %v\n",firstName,lastName,userTickets,email)
+	fmt.Printf("%v tickets remaining for %v\n",remainigTickets,conferenceName)
 
 }
 
