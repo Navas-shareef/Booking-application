@@ -4,10 +4,11 @@ import "fmt"
 
 func  main()  {
 
-	var conferenceName  = "Go conference"
-	const conferenceTickets=50 
+	 conferenceName  := "Go conference"
+	const conferenceTickets int=50 
 	var remainigTickets uint =50 
 	
+	 bookings:=  []string{}
 	
 
 
@@ -19,6 +20,9 @@ func  main()  {
 	fmt.Println("Get your tickets here to attend")
 	
 
+	
+	
+	
 	var firstName string
 	var lastName string
 	var email string 
@@ -26,19 +30,25 @@ func  main()  {
 	// ask user for their name
 	fmt.Println("Enter your first name: ")
 	fmt.Scan(&firstName)
-
+	
 	fmt.Println("Enter your last name: ")
 	fmt.Scan(&lastName)
-
+	
 	fmt.Println("Enter your email address: ")
 	fmt.Scan(&email)
-
+	
 	fmt.Println("Enter number of tickets: ")
 	fmt.Scan(&userTickets)
+	
+	// bookings[0] = "navas"
+	bookings=append(bookings,"ameer")
 
-
+	fmt.Printf("The whole array: %v\n ",bookings)
+	fmt.Printf("Array length %v",len(bookings))
 	remainigTickets=remainigTickets - userTickets
 
+	
+	
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation emait at %v\n",firstName,lastName,userTickets,email)
 	fmt.Printf("%v tickets remaining for %v\n",remainigTickets,conferenceName)
 
