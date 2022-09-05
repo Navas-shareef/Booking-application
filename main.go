@@ -6,26 +6,87 @@ import (
 )
 
 
-func  main()  {
-
-	 conferenceName  := "Go conference"
+	var conferenceName  = "Go conference"
 	const conferenceTickets int=50 
 	var remainigTickets uint =50 
+	var bookings =  []string{}
+
+
+func  main()  {
+
+
 	
-	bookings:=  []string{}
-	
-
-
-
-	fmt.Printf("conferenceTickets is %T, conferenceName is %T,remainingTicket is %T",conferenceTickets,conferenceName,remainigTickets)
-
-	fmt.Printf("Welcome to %v booking application\n",conferenceName)
-	fmt.Printf("We have total of %v and  %v are still available\n",conferenceTickets,remainigTickets)
-	fmt.Println("Get your tickets here to attend")
-	
+	greetUsers()
 
 	for		remainigTickets >0 && len(bookings) < 50	{	
-			var firstName string	
+			
+			firstName,lastName,email,userTickets := getUserInput()
+			isValidName,isValidEmail,isValidTicketNumber :=validateUserInput(firstName,lastName,email,userTickets,remainigTickets)
+
+			if isValidName && isValidEmail && isValidTicketNumber{
+
+				bookTicket(userTickets,firstName,lastName,email,conferenceName)
+
+				firstNames:=getFirstNames()
+				fmt.Printf("The first names of bookings are: %v\n",firstNames)
+
+			}else if remainigTickets==0{
+
+					//end program
+					fmt.Println("Our conference is booked out. Come back next year. ")
+					break
+				
+			}else{
+				if !isValidName{
+					fmt.Println(" first name or last name you entered is too short")
+				}
+				if !isValidEmail{
+					fmt.Println("email address you entered doesn't contain @ sign")
+				}
+				if !isValidTicketNumber{
+					fmt.Println("invalid userToken")
+				}
+			}
+				
+	}
+	
+}
+
+
+
+/// wishing user
+func  greetUsers()  {
+	fmt.Printf("Welcome to %v bookong application\n",conferenceName)
+	fmt.Printf("We have total of %v and  %v are still available\n",conferenceTickets,remainigTickets)
+	fmt.Println("Get your tickets here to attend")
+}
+
+
+/// displaying user first names
+func getFirstNames()[]string  {
+	firstNames:=[]string{}			
+	for _,booking := range bookings{
+		var names=	strings.Fields(booking)
+		firstNames=append(firstNames,names[0])
+	}
+	return firstNames
+}
+
+
+///function to validate user inputs
+func validateUserInput(firstName string,lastName string,email string, userTickets uint,remainigTickets uint) (bool,bool,bool) {
+
+			isValidName  := len(firstName)>=2 && len(lastName)>=2
+			isValidEmail :=strings.Contains(email,"@")
+			isValidTicketNumber :=userTickets > 0 && userTickets <= remainigTickets
+	return isValidName,isValidEmail,isValidTicketNumber
+}
+
+
+
+///reading user inputs
+func getUserInput()  (string,string,string,uint){
+	var firstName string	
 			var lastName string
 			var email string 
 			var userTickets uint
@@ -42,53 +103,15 @@ func  main()  {
 			fmt.Println("Enter number of tickets: ")
 			fmt.Scan(&userTickets)
 
-			isValidName  := len(firstName)>=2 && len(lastName)>=2
-			isValidEmail :=strings.Contains(email,"@")
-			isValidTicketNumber :=userTickets > 0 && userTickets <= remainigTickets
-			
-			if isValidName && isValidEmail && isValidTicketNumber{
+		return firstName,lastName,email,userTickets	
+}
 
-				remainigTickets=remainigTickets - userTickets
+
+func bookTicket(userTickets uint ,firstName string,lastName string ,email string,conferenceName string)  {
+	remainigTickets=remainigTickets - userTickets
 				bookings=append(bookings,firstName+" "+lastName)
 				
 				fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation emait at %v\n",firstName,lastName,userTickets,email)
 				fmt.Printf("%v tickets remaining for %v\n",remainigTickets,conferenceName)
-				firstNames:=[]string{}			
-				for _,booking := range bookings{
-
-					var names=	strings.Fields(booking)
-					firstNames=append(firstNames,names[0])
-				}
-
-				fmt.Printf("The first names of bookings are: %v\n",firstNames)
-
-			}else if userTickets==remainigTickets{
-
-					//end program
-					fmt.Println("Our conference is booked out. Come back next year. ")
-					break
-				
-			}else{
-				if !isValidName{
-					fmt.Println(" first name or last name you entered is too short")
-				}
-				if !isValidEmail{
-					fmt.Println("email address you entered doesn't contain @ sign")
-				}
-				if !isValidTicketNumber{
-					fmt.Println("invalid userToken")
-				}
-
-			
-			}
-			
-		
-			
-			
-		
-	}	
-	
-	
-	
+					
 }
-
