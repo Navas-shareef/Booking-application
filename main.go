@@ -4,6 +4,7 @@ import (
 	"booking-app/helper"
 	"fmt"
 	"time"	
+	"sync"
 	
 )
 
@@ -21,14 +22,11 @@ import (
 	}
 
 
+	var  wg = sync.WaitGroup{}
+
 func  main()  {
-
-
-	
 	greetUsers()
-
 	for		remainigTickets >0 && len(bookings) < 50	{	
-			
 			firstName,lastName,email,userTickets := getUserInput()
 			isValidName,isValidEmail,isValidTicketNumber :=helper.ValidateUserInput(firstName,lastName,email,userTickets,remainigTickets)
 
@@ -36,6 +34,7 @@ func  main()  {
 
 				bookTicket(userTickets,firstName,lastName,email,conferenceName)
 
+				wg.Add(1)
 				go sendTicket(userTickets,firstName,lastName,email)
 
 				firstNames:=getFirstNames()
@@ -58,8 +57,9 @@ func  main()  {
 					fmt.Println("invalid userToken")
 				}
 			}
-				
+			wg.Wait()	
 	}
+	
 	
 }
 
@@ -138,5 +138,6 @@ func sendTicket(userTickets uint,firstName string,lastName string, email string)
 	fmt.Println("###################")
 	fmt.Printf("Sending ticket %v to email address %v\n",ticket,email)
 	fmt.Println("###################")
+	wg.Done()
 	
 }
